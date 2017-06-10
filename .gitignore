@@ -24,3 +24,5 @@
 
 vendor/bundle
 .env
+/public/packs
+/node_modules
