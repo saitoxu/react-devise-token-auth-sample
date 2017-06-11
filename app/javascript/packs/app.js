@@ -1,56 +1,29 @@
 import React from 'react'
-import { Route, Link } from 'react-router-dom'
-import { connect } from 'react-redux'
-// import FacebookLogin from 'react-facebook-login'
-import { validateToken, signout } from './modules/auth'
-import Home from './home'
+import { Route, Switch } from 'react-router-dom'
 import PrivateRoute from './privateRoute'
+import GlobalNav from './globalNav'
+import Home from './home'
 import Signup from './signup'
 import Login from './login'
-import NoteList from './noteList'
+import NoteList from './containers/notes/index'
+import NoteForm from './containers/notes/new'
 
 class App extends React.Component {
-  componentDidMount() {
-    localStorage.removeItem('access-token')
-    localStorage.removeItem('client')
-    localStorage.removeItem('expiry')
-    localStorage.removeItem('uid')
-    this.props.dispatch(validateToken())
-  }
-
-  signout(e) {
-    e.preventDefault()
-    this.props.dispatch(signout())
-  }
-
   render() {
-    const { isAuthenticated } = this.props
     return (
       <div>
-        <ul>
-          <li><Link to="/">Home</Link></li>
-          <li><Link to="/signup">Signup</Link></li>
-          <li><Link to="/login">Login</Link></li>
-          <li><a href="/signout" onClick={this.signout.bind(this)}>Signout</a></li>
-        </ul>
+        <GlobalNav />
         <hr/>
         <Route exact path="/" component={Home} />
         <Route path="/signup" component={Signup} />
         <Route path="/login" component={Login} />
-        <PrivateRoute path="/notes" isAuthenticated={isAuthenticated} component={NoteList} />
+        <Switch>
+          <PrivateRoute path="/notes/new" component={NoteForm} />
+          <PrivateRoute path="/notes" component={NoteList} />
+        </Switch>
       </div>
     )
   }
 }
 
-function mapStateToProps(state) {
-  const { auth, router } = state
-  const { loading, isAuthenticated } = auth
-  return {
-    loading,
-    isAuthenticated,
-    router
-  }
-}
-
-export default connect(mapStateToProps)(App)
+export default App

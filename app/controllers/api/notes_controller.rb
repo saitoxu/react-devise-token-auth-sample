@@ -1,0 +1,34 @@
+module Api
+  class NotesController < ApplicationController
+    before_action :authenticate_user!
+    before_action :set_note, only: [:show, :update, :destroy]
+
+    def index
+      @notes = Note.where(user: current_user)
+      render json: { notes: @notes }, status: :ok
+    end
+
+    def show
+      if @note.user != current_user
+        render json: { success: false, errors: ['You don\'t have the note'] }, status: :not_found
+        return
+      end
+      render json: { note: @note }, status: :ok
+    end
+
+    def update
+    end
+
+    def create
+    end
+
+    def destroy
+    end
+
+    private
+
+    def set_note
+      @note = Note.find(params[:id])
+    end
+  end
+end

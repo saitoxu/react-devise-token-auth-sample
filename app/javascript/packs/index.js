@@ -10,15 +10,15 @@ import { ConnectedRouter, routerReducer, routerMiddleware } from 'react-router-r
 import { compose, createStore, applyMiddleware, combineReducers } from 'redux'
 import thunkMiddleware from 'redux-thunk'
 import persistState from 'redux-localstorage'
-// import FacebookLogin from 'react-facebook-login'
-// import auth, { validateToken } from './modules/auth'
 import App from './app'
 import auth from './modules/auth'
+import notes from './modules/notes'
 
 const history = createHistory()
 
 const rootReducer = combineReducers({
   auth,
+  notes,
   router: routerReducer
 })
 

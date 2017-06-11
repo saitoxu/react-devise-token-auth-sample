@@ -4,4 +4,6 @@ class User < ActiveRecord::Base
           :recoverable, :rememberable, :trackable, :validatable,
           :confirmable, :omniauthable, omniauth_providers: [:facebook]
   include DeviseTokenAuth::Concerns::User
+
+  has_many :notes
 end

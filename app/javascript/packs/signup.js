@@ -1,6 +1,8 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import { Redirect } from 'react-router-dom'
 
-export default class Signup extends React.Component {
+class Signup extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -32,6 +34,10 @@ export default class Signup extends React.Component {
   }
 
   render() {
+    const { isAuthenticated } = this.props
+    if (isAuthenticated) {
+      return <Redirect to="/" />
+    }
     return (
       <div>
         <h2>Signup</h2>
@@ -44,3 +50,11 @@ export default class Signup extends React.Component {
     )
   }
 }
+
+function mapStateToProps(state) {
+  const { auth } = state
+  const { isAuthenticated } = auth
+  return { isAuthenticated }
+}
+
+export default connect(mapStateToProps)(Signup)
