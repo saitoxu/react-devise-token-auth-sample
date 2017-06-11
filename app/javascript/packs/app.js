@@ -2,7 +2,7 @@ import React from 'react'
 import { Route, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 // import FacebookLogin from 'react-facebook-login'
-import { validateToken } from './modules/auth'
+import { validateToken, signout } from './modules/auth'
 import Home from './home'
 import PrivateRoute from './privateRoute'
 import Signup from './signup'
@@ -11,7 +11,16 @@ import NoteList from './noteList'
 
 class App extends React.Component {
   componentDidMount() {
+    localStorage.removeItem('access-token')
+    localStorage.removeItem('client')
+    localStorage.removeItem('expiry')
+    localStorage.removeItem('uid')
     this.props.dispatch(validateToken())
+  }
+
+  signout(e) {
+    e.preventDefault()
+    this.props.dispatch(signout())
   }
 
   render() {
@@ -22,6 +31,7 @@ class App extends React.Component {
           <li><Link to="/">Home</Link></li>
           <li><Link to="/signup">Signup</Link></li>
           <li><Link to="/login">Login</Link></li>
+          <li><a href="/signout" onClick={this.signout.bind(this)}>Signout</a></li>
         </ul>
         <hr/>
         <Route exact path="/" component={Home} />

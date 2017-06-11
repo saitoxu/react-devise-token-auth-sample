@@ -20,7 +20,7 @@ class Login extends React.Component {
   render() {
     const { isAuthenticated } = this.props
     if (isAuthenticated) {
-      return <Redirect to="/notes" />
+      return <Redirect to="/" />
     }
     return (
       <div>
