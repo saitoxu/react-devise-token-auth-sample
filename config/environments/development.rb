@@ -55,13 +55,13 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.smtp_settings = {
-    address: ENV['GLIT_MAIL_ADDRESS'],
-    port: ENV['GLIT_MAIL_PORT'],
-    user_name: ENV['GLIT_MAIL_USER'],
-    password: ENV['GLIT_MAIL_PASS'],
-    domain: ENV['GLIT_MAIL_DOMAIN']
+    address: ENV['MAIL_ADDRESS'],
+    port: ENV['MAIL_PORT'],
+    user_name: ENV['MAIL_USER'],
+    password: ENV['MAIL_PASS'],
+    domain: ENV['MAIL_DOMAIN']
   }
-  config.action_mailer.logger = Logger.new(config.paths['log'].first) # メール本文のログ抑止
+  config.action_mailer.logger = Logger.new(config.paths['log'].first)
   config.action_mailer.logger.level = Logger::INFO
   config.action_mailer.default_url_options = { host: 'localhost:3000', protocol: 'http' }
 

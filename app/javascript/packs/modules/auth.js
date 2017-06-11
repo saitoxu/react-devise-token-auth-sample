@@ -2,6 +2,7 @@
 const REQUEST = 'react-devise-sample/auth/REQUEST'
 const RECEIVED = 'react-devise-sample/auth/RECEIEVD'
 const FAILED = 'react-devise-sample/auth/FAILED'
+const PASSED = 'react-devise-sample/auth/PASSED'
 
 // Action Creators
 export function authenticate(email, password) {
@@ -19,18 +20,54 @@ export function authenticate(email, password) {
       .then(res => {
         const token = res.headers.get('access-token')
         const client = res.headers.get('client')
+        const expiry = res.headers.get('expiry')
         const uid = res.headers.get('uid')
-        debugger
-        // for (const header of res.headers) {
-        //   console.log(header)
-        // }
+        localStorage.setItem('access-token', token)
+        localStorage.setItem('client', client)
+        localStorage.setItem('expiry', expiry)
+        localStorage.setItem('uid', uid)
         return res.json()
       })
       .then(json => {
-        debugger
         dispatch(receiveUserInfo())
       })
       .catch(err => dispatch(failAuthentication()))
+  }
+}
+
+export function validateToken() {
+  return (dispatch, getState) => {
+    const uid = localStorage.uid
+    const client = localStorage.client
+    const accessToken = localStorage.getItem('access-token')
+    console.log(uid, client, accessToken)
+    if (uid === 'null' || client === 'null' || accessToken === 'null') {
+      // dispatch()
+      return
+    } else {
+      const url = `/auth/validate_token?uid=${uid}&client=${client}&access-token=${accessToken}`
+      const options = {
+        method: 'GET',
+        header: { 'Content-Type': 'application/json; charset=utf-8' }
+      }
+      return fetch(url, options)
+        .then(res => {
+          const token = res.headers.get('access-token')
+          const client = res.headers.get('client')
+          const expiry = res.headers.get('expiry')
+          const uid = res.headers.get('uid')
+          localStorage.setItem('access-token', token)
+          localStorage.setItem('client', client)
+          localStorage.setItem('expiry', expiry)
+          localStorage.setItem('uid', uid)
+          return res.json()
+        })
+        .then(json => {
+          if (json.success) {
+            dispatch(receiveValidationResult())
+          }
+        })
+    }
   }
 }
 
@@ -44,6 +81,10 @@ function receiveUserInfo() {
 
 function failAuthentication() {
   return { type: FAILED }
+}
+
+function receiveValidationResult() {
+  return { type: PASSED }
 }
 
 // Reducer
@@ -72,6 +113,15 @@ export default function reducer(state = initialState, action = {}) {
         state,
         {
           loading: false
+        }
+      )
+    case PASSED:
+      return Object.assign(
+        {},
+        state,
+        {
+          loading: false,
+          isAuthenticated: true
         }
       )
     default: return state

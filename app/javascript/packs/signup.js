@@ -28,7 +28,6 @@ export default class Signup extends React.Component {
     .then(json => {
       console.log(json)
       console.log(document.cookie)
-      debugger
     })
   }
 
