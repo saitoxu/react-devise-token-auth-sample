@@ -64,7 +64,8 @@ export default function reducer(state = initialState, action = {}) {
         {},
         state,
         {
-          loading: false
+          loading: false,
+          note: null
         }
       )
     default: return state
@@ -73,5 +74,5 @@ export default function reducer(state = initialState, action = {}) {
 
 const initialState = {
   loading: false,
-  note: {}
+  note: null
 }

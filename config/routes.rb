@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   get '/confirm_success' => 'home#confirm_success'
   get '/notes' => 'home#index'
   get '/notes/new' => 'home#index'
+  get '/notes/:id/edit' => 'home#index'
   get '/notes/:id' => 'home#index'
   get '/signup' => 'home#index'
   get '/login' => 'home#index'

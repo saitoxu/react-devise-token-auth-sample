@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 import { fetchNote } from '../../modules/note'
 
 class Note extends React.Component {
@@ -17,10 +18,19 @@ class Note extends React.Component {
         </div>
       )
     }
+    if (note) {
+      const { id } = this.props.match.params
+      return (
+        <div>
+          <h2>{note.title}</h2>
+          <Link to={`/notes/${id}/edit`}>Edit</Link>
+          <p>{note.content}</p>
+        </div>
+      )
+    }
     return (
       <div>
-        <h2>{note.title}</h2>
-        <p>{note.content}</p>
+        <h2>Not Found</h2>
       </div>
     )
   }
