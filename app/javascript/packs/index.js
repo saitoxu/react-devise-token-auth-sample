@@ -12,12 +12,14 @@ import thunkMiddleware from 'redux-thunk'
 import persistState from 'redux-localstorage'
 import App from './app'
 import auth from './modules/auth'
+import note from './modules/note'
 import notes from './modules/notes'
 
 const history = createHistory()
 
 const rootReducer = combineReducers({
   auth,
+  note,
   notes,
   router: routerReducer
 })

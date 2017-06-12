@@ -7,6 +7,7 @@ import Signup from './signup'
 import Login from './login'
 import NoteList from './containers/notes/index'
 import NoteForm from './containers/notes/new'
+import Note from './containers/notes/show'
 
 class App extends React.Component {
   render() {
@@ -20,6 +21,7 @@ class App extends React.Component {
         <Switch>
           <PrivateRoute exact path="/notes" component={NoteList} />
           <PrivateRoute path="/notes/new" component={NoteForm} />
+          <PrivateRoute path="/notes/:id" component={Note} />
         </Switch>
       </div>
     )
