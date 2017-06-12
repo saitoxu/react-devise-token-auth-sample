@@ -12,3 +12,11 @@ $ yarn install
 $ yarn dev
 $ rails s # in another shell
 ```
+
+## Author
+
+- Yosuke Saito - [saitoxu](https://github.com/saitoxu)
+
+## License
+
+[MIT](LICENSE.txt)
