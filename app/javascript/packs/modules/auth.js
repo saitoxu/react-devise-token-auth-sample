@@ -2,9 +2,10 @@ import axios from 'axios'
 
 // Actions
 const REQUEST = 'react-devise-sample/auth/REQUEST'
-const RECEIVED = 'react-devise-sample/auth/RECEIEVD'
+const RECEIVED = 'react-devise-sample/auth/RECEIVED'
 const FAILED = 'react-devise-sample/auth/FAILED'
 const SIGNOUT = 'react-devise-sample/auth/SIGNOUT'
+const DO_NOTHING = 'react-devise-sample/auth/DO_NOTHING'
 
 // Action Creators
 export function authenticate(email, password) {
@@ -50,7 +51,10 @@ export function updateAuthentication(headers) {
   const client = headers['client']
   const accessToken = headers['access-token']
   const expiry = headers['expiry']
-  return successAuthentication(uid, client, accessToken, expiry)
+  if (uid && client && accessToken && expiry) {
+    return successAuthentication(uid, client, accessToken, expiry)
+  }
+  return { type: DO_NOTHING }
 }
 
 export function expireAuthentication() {

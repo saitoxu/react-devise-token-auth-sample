@@ -18,8 +18,8 @@ class App extends React.Component {
         <Route path="/signup" component={Signup} />
         <Route path="/login" component={Login} />
         <Switch>
+          <PrivateRoute exact path="/notes" component={NoteList} />
           <PrivateRoute path="/notes/new" component={NoteForm} />
-          <PrivateRoute path="/notes" component={NoteList} />
         </Switch>
       </div>
     )

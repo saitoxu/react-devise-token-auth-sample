@@ -20,6 +20,13 @@ module Api
     end
 
     def create
+      @note = Note.new(note_params)
+      @note.user = current_user
+      if @note.save
+        render json: { note: @note }, status: :created
+        return
+      end
+      render json: { errors: @note.errors }, status: :unprocessable_entity
     end
 
     def destroy
@@ -29,6 +36,10 @@ module Api
 
     def set_note
       @note = Note.find(params[:id])
+    end
+
+    def note_params
+      params.require(:note).permit(:title, :content)
     end
   end
 end

@@ -3,7 +3,7 @@ import { updateAuthentication, expireAuthentication } from './auth'
 
 // Actions
 const REQUEST = 'react-devise-sample/notes/REQUEST'
-const RECEIVED = 'react-devise-sample/notes/RECEIEVD'
+const RECEIVED = 'react-devise-sample/notes/RECEIVED'
 const FAILED = 'react-devise-sample/notes/FAILED'
 
 // Action Creators
@@ -64,7 +64,7 @@ export default function reducer(state = initialState, action = {}) {
         {},
         state,
         {
-          loading: true
+          loading: false
         }
       )
     default: return state
