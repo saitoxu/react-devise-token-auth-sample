@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
+import { List, ListItem, ListSubHeader } from 'react-toolbox/lib/list'
 import { fetchNotes, deleteNote } from '../../modules/notes'
 
 class NoteList extends React.Component {
@@ -21,12 +22,17 @@ class NoteList extends React.Component {
     const noteList = []
     notes.forEach((note, i) => {
       noteList.push(
-        <li key={i}>
+        <ListItem key={i} itemContent={<div>
           <Link to={`/notes/${note.id}`}>{note.title}</Link> <a data-id={note.id} data-title={note.title} href="#" onClick={this.handleClick.bind(this)}>Delete</a>
-        </li>
+        </div>} />
       )
     })
-    return <ul>{noteList}</ul>
+    return (
+      <List selectable ripple>
+        <ListSubHeader caption='Note List' />
+        {noteList}
+      </List>
+    )
   }
 
   render() {
@@ -41,7 +47,6 @@ class NoteList extends React.Component {
     }
     return (
       <div>
-        <h2>Note List</h2>
         {this.renderNotes()}
       </div>
     )

@@ -15,16 +15,17 @@ class App extends React.Component {
     return (
       <div>
         <GlobalNav />
-        <hr/>
-        <Route exact path="/" component={Home} />
-        <Route path="/signup" component={Signup} />
-        <Route path="/login" component={Login} />
-        <Switch>
-          <PrivateRoute exact path="/notes" component={NoteList} />
-          <PrivateRoute path="/notes/new" component={NoteForm} />
-          <PrivateRoute path="/notes/:id/edit" component={NoteEdit} />
-          <PrivateRoute path="/notes/:id" component={Note} />
-        </Switch>
+        <div style={{ marginTop: 64 }}>
+          <Route exact path="/" component={Home} />
+          <Route path="/signup" component={Signup} />
+          <Route path="/login" component={Login} />
+          <Switch>
+            <PrivateRoute exact path="/notes" component={NoteList} />
+            <PrivateRoute path="/notes/new" component={NoteForm} />
+            <PrivateRoute path="/notes/:id/edit" component={NoteEdit} />
+            <PrivateRoute path="/notes/:id" component={Note} />
+          </Switch>
+        </div>
       </div>
     )
   }

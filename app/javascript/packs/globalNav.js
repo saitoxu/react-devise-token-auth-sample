@@ -1,6 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
+import AppBar from 'react-toolbox/lib/app_bar'
+import Navigation from 'react-toolbox/lib/navigation'
 import { signout } from './modules/auth'
 
 class GlobalNav extends React.Component {
@@ -12,12 +14,14 @@ class GlobalNav extends React.Component {
   render() {
     const { isAuthenticated } = this.props
     return (
-      <ul>
-        <li><Link to="/">Home</Link></li>
-        { !isAuthenticated && <li><Link to="/signup">Signup</Link></li> }
-        { !isAuthenticated && <li><Link to="/login">Login</Link></li> }
-        { isAuthenticated && <li><a href="#" onClick={this.signout.bind(this)}>Signout</a></li> }
-      </ul>
+      <AppBar title="Sample App" leftIcon={null} fixed>
+        <Navigation type="horizontal">
+          <Link to="/">Home</Link>
+          { !isAuthenticated && <Link to="/signup">Signup</Link> }
+          { !isAuthenticated && <Link to="/login">Login</Link> }
+          { isAuthenticated && <a href="#" onClick={this.signout.bind(this)}>Signout</a> }
+        </Navigation>
+      </AppBar>
     )
   }
 }
