@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { updateAuthentication, expireAuthentication } from './auth'
+import { expireAuthentication } from './auth'
 
 // Actions
 const REQUEST = 'react-devise-sample/note/REQUEST'
@@ -21,7 +21,6 @@ export function fetchNote(id) {
         'token-type': 'Bearer'
       }
     }).then(response => {
-      dispatch(updateAuthentication(response.headers))
       dispatch(receiveNote(response.data.note))
     }).catch(error => {
       dispatch(failFetchNote())

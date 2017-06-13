@@ -33,7 +33,7 @@ if (process.env.NODE_ENV === 'development') {
 
 const enhancer = compose(
   applyMiddleware(...middlewares),
-  persistState('auth')
+  persistState('auth', { key: 'AUTH' })
 )
 
 const store = createStore(rootReducer, {}, enhancer)

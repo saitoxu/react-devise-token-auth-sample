@@ -39,6 +39,15 @@ module Api
     end
 
     def destroy
+      if @note.user != current_user
+        render json: { success: false, errors: ['You don\'t have the note'] }, status: :not_found
+        return
+      end
+      if @note.destroy
+        head :no_content
+        return
+      end
+      render json: @note.errors, status: :unprocessable_entity
     end
 
     private

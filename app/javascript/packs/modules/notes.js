@@ -1,10 +1,11 @@
 import axios from 'axios'
-import { updateAuthentication, expireAuthentication } from './auth'
+import { expireAuthentication } from './auth'
 
 // Actions
 const REQUEST = 'react-devise-sample/notes/REQUEST'
 const RECEIVED = 'react-devise-sample/notes/RECEIVED'
 const FAILED = 'react-devise-sample/notes/FAILED'
+const DELETED = 'react-devise-sample/notes/DELETED'
 
 // Action Creators
 export function fetchNotes() {
@@ -21,10 +22,32 @@ export function fetchNotes() {
         'token-type': 'Bearer'
       }
     }).then(response => {
-      dispatch(updateAuthentication(response.headers))
       dispatch(receiveNotes(response.data.notes))
     }).catch(error => {
       dispatch(failFetchNotes())
+      if (error.response && error.response.status === 401) {
+        dispatch(expireAuthentication())
+      }
+    })
+  }
+}
+
+export function deleteNote(id) {
+  return (dispatch, getState) => {
+    const { auth } = getState()
+    return axios({
+      url: `/api/notes/${id}`,
+      method: 'DELETE',
+      headers: {
+        'access-token': auth.accessToken,
+        'client': auth.client,
+        'uid': auth.uid,
+        'expiry': auth.expiry,
+        'token-type': 'Bearer'
+      }
+    }).then(response => {
+      dispatch(deletedNote(id))
+    }).catch(error => {
       if (error.response && error.response.status === 401) {
         dispatch(expireAuthentication())
       }
@@ -42,6 +65,10 @@ function receiveNotes(notes) {
 
 function failFetchNotes() {
   return { type: FAILED }
+}
+
+function deletedNote(id) {
+  return { type: DELETED, id }
 }
 
 export default function reducer(state = initialState, action = {}) {
@@ -67,6 +94,12 @@ export default function reducer(state = initialState, action = {}) {
           loading: false
         }
       )
+    case DELETED: {
+      const notes = [].concat(
+        state.notes.filter((note) => note.id !== parseInt(action.id))
+      )
+      return { loading: false, notes }
+    }
     default: return state
   }
 }

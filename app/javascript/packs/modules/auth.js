@@ -5,7 +5,6 @@ const REQUEST = 'react-devise-sample/auth/REQUEST'
 const RECEIVED = 'react-devise-sample/auth/RECEIVED'
 const FAILED = 'react-devise-sample/auth/FAILED'
 const SIGNOUT = 'react-devise-sample/auth/SIGNOUT'
-const DO_NOTHING = 'react-devise-sample/auth/DO_NOTHING'
 
 // Action Creators
 export function authenticate(email, password) {
@@ -44,17 +43,6 @@ export function signout() {
       console.log(error)
     })
   }
-}
-
-export function updateAuthentication(headers) {
-  const uid = headers['uid']
-  const client = headers['client']
-  const accessToken = headers['access-token']
-  const expiry = headers['expiry']
-  if (uid && client && accessToken && expiry) {
-    return successAuthentication(uid, client, accessToken, expiry)
-  }
-  return { type: DO_NOTHING }
 }
 
 export function expireAuthentication() {

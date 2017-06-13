@@ -2,7 +2,7 @@ import React from 'react'
 import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import axios from 'axios'
-import { updateAuthentication, expireAuthentication } from '../../modules/auth'
+import { expireAuthentication } from '../../modules/auth'
 import { fetchNote } from '../../modules/note'
 
 class NoteEdit extends React.Component {
@@ -46,7 +46,6 @@ class NoteEdit extends React.Component {
       },
       data
     }).then(response => {
-      this.props.dispatch(updateAuthentication(response.headers))
       this.setState({ redirect: true })
     }).catch(error => {
       if (error.response && error.response.status === 401) {
